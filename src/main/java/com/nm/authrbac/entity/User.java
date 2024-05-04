@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 @Document(collection = "users")
 public class User {
-    enum Gender {
+    public enum Gender {
         MALE,
         FEMALE,
         OTHER
@@ -18,7 +18,7 @@ public class User {
     @Id private String id;
     private String name;
     private Gender gender;
-    @Indexed(unique = true) private String email;
+    @Indexed(unique = true) private String username;
     private String password;
     private String[] roles;
     private Point location;
@@ -47,12 +47,12 @@ public class User {
         this.gender = gender;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUsername() {
+        return username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -85,7 +85,7 @@ public class User {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", gender=" + gender +
-                ", email='" + email + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", roles=" + Arrays.toString(roles) +
                 ", location=" + location +
