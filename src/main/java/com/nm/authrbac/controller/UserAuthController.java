@@ -87,7 +87,8 @@ public class UserAuthController {
                 throw new UsernameNotFoundException("Username or password is incorrect.");
             }
         } catch (Exception e) {
-            Response resp = new Response(Response.SUCCESS_STATUS.FALSE, "Error occurred in UserAuthController.login");
+            System.out.println(e);
+            Response resp = new Response(Response.SUCCESS_STATUS.FALSE, "Error occurred in UserAuthController.login" + e);
             return new ResponseEntity<Response>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
