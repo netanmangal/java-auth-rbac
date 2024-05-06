@@ -8,6 +8,7 @@ import com.nm.authrbac.entity.RequestBodies.LoginAuthRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,7 @@ public class UserAuthController {
     }
 
     @GetMapping("/getAll")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Response> getAllUsers() {
         try {
             List<User> allUsers = userService.getAllUsers();
@@ -54,6 +56,7 @@ public class UserAuthController {
     }
 
     @GetMapping("/getUserByUsername/{username}")
+    @PreAuthorize("hasRole('USER')")
     public ResponseEntity<Response> getUserByUsername(@PathVariable String username) {
         try {
             User user = userService.getUserByUsername(username);
