@@ -4,7 +4,7 @@ import com.nm.authrbac.entity.Response;
 import com.nm.authrbac.entity.User;
 import com.nm.authrbac.service.JwtService;
 import com.nm.authrbac.service.UserService;
-import com.nm.authrbac.entity.RequestBodies.LoginAuthRequest;
+import com.nm.authrbac.entity.RequestBodies.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +12,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
@@ -92,6 +94,21 @@ public class UserAuthController {
         } catch (Exception e) {
             System.out.println(e);
             Response resp = new Response(Response.SUCCESS_STATUS.FALSE, "Error occurred in UserAuthController.login" + e);
+            return new ResponseEntity<Response>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/reset-password")
+    public ResponseEntity<Response> resetPassword(@RequestBody ResetPasswordRequest resetReq) {
+        try {
+            Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+            String username = auth.getName();
+            String msg = userService.resetPasswordUsingUsername(username, resetReq.getOldPassword(), resetReq.getNewPassword());
+
+            Response resp = new Response(Response.SUCCESS_STATUS.TRUE, msg);
+            return new ResponseEntity<Response>(resp, HttpStatus.OK);
+        } catch (Exception e) {
+            Response resp = new Response(Response.SUCCESS_STATUS.FALSE, "Error occurred in UserAuthController.resetPassword" + e);
             return new ResponseEntity<Response>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
