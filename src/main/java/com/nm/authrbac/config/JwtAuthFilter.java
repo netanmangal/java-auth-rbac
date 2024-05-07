@@ -53,7 +53,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
             filterChain.doFilter(request, response);
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("Error occurred in JwtAuthFilter.doFilterInternal" + e);
             response.sendError(HttpStatus.UNAUTHORIZED.value(), e.getMessage());
         }
     }
