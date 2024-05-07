@@ -1,28 +1,31 @@
 package com.nm.authrbac.entity;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.mongodb.core.mapping.DocumentReference;
-;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class SecretAccessDetails {
 
-    @DocumentReference(collection = "users") private ObjectId secretAccessedBy;
-    private LocalDateTime accessedAt;
+    @DocumentReference(collection = "users") private String secretAccessedBy;
+    private Date accessedAt;
 
-    public ObjectId getSecretAccessedBy() {
+    public SecretAccessDetails(String secretAccessedBy, Date accessedAt) {
+        this.secretAccessedBy = secretAccessedBy;
+        this.accessedAt = accessedAt;
+    }
+
+    public String getSecretAccessedBy() {
         return secretAccessedBy;
     }
 
-    public void setSecretAccessedBy(ObjectId secretAccessedBy) {
+    public void setSecretAccessedBy(String secretAccessedBy) {
         this.secretAccessedBy = secretAccessedBy;
     }
 
-    public LocalDateTime getAccessedAt() {
+    public Date getAccessedAt() {
         return accessedAt;
     }
 
-    public void setAccessedAt(LocalDateTime accessedAt) {
+    public void setAccessedAt(Date accessedAt) {
         this.accessedAt = accessedAt;
     }
 }

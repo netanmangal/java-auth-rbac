@@ -44,4 +44,25 @@ public class RequestBodies {
         }
     }
 
+    public static class PostSecretRequest {
+        private String secret;
+        private String[] authorized_roles;
+
+        public String getSecret() {
+            return secret;
+        }
+
+        public void setSecret(String secret) {
+            this.secret = secret;
+        }
+
+        public String[] getAuthorized_roles() {
+            return authorized_roles;
+        }
+
+        public void setAuthorized_roles(String[] authorized_roles) {
+            this.authorized_roles = authorized_roles;
+        }
+    }
+
 }

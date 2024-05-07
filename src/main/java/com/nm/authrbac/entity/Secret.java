@@ -1,18 +1,23 @@
 package com.nm.authrbac.entity;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 @Document(collection = "secrets")
 public class Secret {
 
     @Id private String id;
     private String secret;
-    @DocumentReference(collection = "users") private ObjectId secretPostedBy;
+    @DBRef(lazy = true) private User secretPostedBy;
     private String[] authorized_roles;
     private SecretAccessDetails[] secretAccessDetails;
+
+    public Secret(String secret, User secretPostedBy, String[] authorized_roles) {
+        this.secret = secret;
+        this.secretPostedBy = secretPostedBy;
+        this.authorized_roles = authorized_roles;
+    }
 
     public String getId() {
         return id;
@@ -30,11 +35,11 @@ public class Secret {
         this.secret = secret;
     }
 
-    public ObjectId getSecretPostedBy() {
+    public User getSecretPostedBy() {
         return secretPostedBy;
     }
 
-    public void setSecretPostedBy(ObjectId secretPostedBy) {
+    public void setSecretPostedBy(User secretPostedBy) {
         this.secretPostedBy = secretPostedBy;
     }
 
