@@ -36,11 +36,11 @@ public class SecretController {
             User user = userService.getUserByUsername(username);
             List<Secret> secrets = secretService.findBySecretPostedBy(user.getId());
 
-            // save secretAccessDetails
-//            SecretAccessDetails secretAccessDetails = new SecretAccessDetails(
-//                    user.getId(),
-//                    new Date()
-//            );
+            SecretAccessDetails secretAccessDetails = new SecretAccessDetails(user, new Date());
+            for (Secret s : secrets) {
+                s.getSecretAccessDetails().add(secretAccessDetails);
+                secretRepository.save(s);
+            }
 
             Response resp = new Response(Response.SUCCESS_STATUS.TRUE, secrets);
             return new ResponseEntity<Response>(resp, HttpStatus.OK);
