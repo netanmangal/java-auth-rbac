@@ -4,16 +4,19 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Document(collection = "secrets")
 public class Secret {
 
     @Id private String id;
     private String secret;
-    @DBRef(lazy = true) private User secretPostedBy;
-    private String[] authorized_roles;
-    private SecretAccessDetails[] secretAccessDetails;
+    @DBRef(lazy = false) private User secretPostedBy;
+    private List<String> authorized_roles = new ArrayList<String>();
+    private List<SecretAccessDetails> secretAccessDetails = new ArrayList<SecretAccessDetails>();
 
-    public Secret(String secret, User secretPostedBy, String[] authorized_roles) {
+    public Secret(String secret, User secretPostedBy, List<String> authorized_roles) {
         this.secret = secret;
         this.secretPostedBy = secretPostedBy;
         this.authorized_roles = authorized_roles;
@@ -43,19 +46,19 @@ public class Secret {
         this.secretPostedBy = secretPostedBy;
     }
 
-    public String[] getAuthorized_roles() {
+    public List<String> getAuthorized_roles() {
         return authorized_roles;
     }
 
-    public void setAuthorized_roles(String[] authorized_roles) {
+    public void setAuthorized_roles(List<String> authorized_roles) {
         this.authorized_roles = authorized_roles;
     }
 
-    public SecretAccessDetails[] getSecretAccessDetails() {
+    public List<SecretAccessDetails> getSecretAccessDetails() {
         return secretAccessDetails;
     }
 
-    public void setSecretAccessDetails(SecretAccessDetails[] secretAccessDetails) {
+    public void setSecretAccessDetails(List<SecretAccessDetails> secretAccessDetails) {
         this.secretAccessDetails = secretAccessDetails;
     }
 }
