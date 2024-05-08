@@ -8,7 +8,6 @@ import com.nm.authrbac.entity.User;
 import com.nm.authrbac.repository.SecretRepository;
 import com.nm.authrbac.service.SecretService;
 import com.nm.authrbac.service.UserService;
-import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
