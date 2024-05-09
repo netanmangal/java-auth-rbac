@@ -1,7 +1,9 @@
 package com.nm.authrbac.controller;
 
 import com.nm.authrbac.entity.Response;
+import com.nm.authrbac.entity.Session;
 import com.nm.authrbac.entity.User;
+import com.nm.authrbac.repository.SessionRepository;
 import com.nm.authrbac.service.JwtService;
 import com.nm.authrbac.service.UserService;
 import com.nm.authrbac.entity.RequestBodies.*;
@@ -31,6 +33,9 @@ public class UserAuthController {
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
+    private SessionRepository sessionRepository;
+
     @PostMapping("/register")
     public ResponseEntity<Response> addUser(@RequestBody User user) {
         try {
@@ -44,7 +49,7 @@ public class UserAuthController {
     }
 
     @GetMapping("/getAll")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response> getAllUsers() {
         try {
             List<User> allUsers = userService.getAllUsers();
@@ -57,7 +62,7 @@ public class UserAuthController {
     }
 
     @GetMapping("/getUserByUsername/{username}")
-    @PreAuthorize("hasRole('USER')")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Response> getUserByUsername(@PathVariable String username) {
         try {
             User user = userService.getUserByUsername(username);
@@ -85,6 +90,9 @@ public class UserAuthController {
             );
             if (authenticate.isAuthenticated()) {
                 String jwt = jwtService.generateToken(authRequest.getUsername());
+
+                sessionRepository.save(new Session(jwt));
+
                 Response resp = new Response(Response.SUCCESS_STATUS.TRUE, jwt);
                 return new ResponseEntity<Response>(resp, HttpStatus.OK);
             } else {
@@ -108,6 +116,19 @@ public class UserAuthController {
             return new ResponseEntity<Response>(resp, HttpStatus.OK);
         } catch (Exception e) {
             Response resp = new Response(Response.SUCCESS_STATUS.FALSE, "Error occurred in UserAuthController.resetPassword" + e);
+            return new ResponseEntity<Response>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/logout")
+    public ResponseEntity<Response> logout(@RequestHeader(name = "Authorization") String authToken) {
+        try {
+            sessionRepository.deleteByAuthToken(authToken.substring(7));
+            Response resp = new Response(Response.SUCCESS_STATUS.TRUE, "Logged out.");
+            return new ResponseEntity<Response>(resp, HttpStatus.OK);
+        } catch (Exception e) {
+            System.out.println("Error occurred in UserAuthController.logout : " + e);
+            Response resp = new Response(Response.SUCCESS_STATUS.FALSE, "Error occurred in UserAuthController.logout");
             return new ResponseEntity<Response>(resp, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

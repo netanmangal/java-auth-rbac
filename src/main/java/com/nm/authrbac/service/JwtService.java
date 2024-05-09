@@ -1,10 +1,13 @@
 package com.nm.authrbac.service;
 
+import com.nm.authrbac.entity.Session;
+import com.nm.authrbac.repository.SessionRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
@@ -17,6 +20,9 @@ import java.util.function.Function;
 
 @Component
 public class JwtService {
+
+    @Autowired
+    private SessionRepository sessionRepository;
 
     public @Value("${jwt.secret}") String jwtSecret;
 
@@ -67,7 +73,8 @@ public class JwtService {
 
     public Boolean validateToken(String token, UserDetails userDetails) {
         final String username_from_token = extractUsername(token);
-        return (username_from_token.equals(userDetails.getUsername()) && !isTokenExpired(token));
+        Session sess = sessionRepository.findByAuthToken(token);
+        return (username_from_token.equals(userDetails.getUsername()) && !isTokenExpired(token) && (sess != null));
     }
 
 }
