@@ -54,7 +54,6 @@ public class SecretController {
     @PostMapping
     public ResponseEntity<Response> postASecret(@RequestBody PostSecretRequest reqSecret) {
         try {
-            System.out.println("Rec a req in postASecret.");
             String username = SecurityContextHolder.getContext().getAuthentication().getName();
             User user = userService.getUserByUsername(username);
             Secret s = secretRepository.save(new Secret(
