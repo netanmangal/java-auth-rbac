@@ -1,0 +1,337 @@
+{
+	"info": {
+		"_postman_id": "c0f7081a-207f-483a-a1f9-7dab88935dab",
+		"name": "Auth-RBAC",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31958727"
+	},
+	"item": [
+		{
+			"name": "GET /health-check",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/health-check",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"health-check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /user/logout",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOHVzZXIiLCJpYXQiOjE3MTUyNTU2NDAsImV4cCI6MTcxNTI1NzQ0MH0.tsOAXVWUEuuw2uwQJTo2_ctd_C3RbVDL6hB3zaLdI3Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/user/logout",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"user",
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /secret/getAllSecretForUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOHVzZXIiLCJpYXQiOjE3MTUxODA4MTgsImV4cCI6MTcxNTE4MjYxOH0.TIfNLFdbn7LIi9hN09-Fd44H2zcmiRlhhfVS2MI2yz4",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/secret/getAllSecretForUser",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"secret",
+						"getAllSecretForUser"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /secret/getById/id",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOHVzZXIiLCJpYXQiOjE3MTUxNzIyNDksImV4cCI6MTcxNTE3NDA0OX0.YRQ490wqzRMQFXbSbUNf6miv7mN6JZKncfBa1CRCnnA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/secret/getById/663b7535c22aee040d5dd105",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"secret",
+						"getById",
+						"663b7535c22aee040d5dd105"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /user/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"USER-9-USER\",\n    \"gender\": \"FEMALE\",\n    \"username\": \"user9user\",\n    \"password\": \"67890\",\n    \"roles\": [\"USER\"],\n    \"location\": {\n        \"x\": 15.3,\n        \"y\": 62.8\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /secret/",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOHVzZXIiLCJpYXQiOjE3MTUyNTU2NDAsImV4cCI6MTcxNTI1NzQ0MH0.tsOAXVWUEuuw2uwQJTo2_ctd_C3RbVDL6hB3zaLdI3Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"secret\": \"This is a secret from user 9 #2\",\n    \"authorized_roles\": [\"ADMIN\"]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/secret",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"secret"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /user/login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"user9user\",\n    \"password\": \"67890\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /user/reset-password",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOHVzZXIiLCJpYXQiOjE3MTUyNTU2NDAsImV4cCI6MTcxNTI1NzQ0MH0.tsOAXVWUEuuw2uwQJTo2_ctd_C3RbVDL6hB3zaLdI3Y",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"oldPassword\": \"67890\",\n    \"newPassword\": \"67890\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/user/reset-password",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"user",
+						"reset-password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /user/getAll",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOXVzZXIiLCJpYXQiOjE3MTUyNTczOTEsImV4cCI6MTcxNTI1OTE5MX0.epU3oyHafvJekjJ5Sd782-cjd2tg51gGXnAprZ7-NXI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{port}}/user/getAll",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"user",
+						"getAll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET user/getUserByUsername",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ1c2VyOXVzZXIiLCJpYXQiOjE3MTUyNTczOTEsImV4cCI6MTcxNTI1OTE5MX0.epU3oyHafvJekjJ5Sd782-cjd2tg51gGXnAprZ7-NXI",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{port}}/user/getUserByUsername/user1admin",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{port}}",
+					"path": [
+						"user",
+						"getUserByUsername",
+						"user1admin"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "port",
+			"value": "8082"
+		}
+	]
+}
